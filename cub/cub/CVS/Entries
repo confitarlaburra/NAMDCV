@@ -1,0 +1,17 @@
+/cub.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_allocator.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_arch.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_debug.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_device.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_macro.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_namespace.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_ptx.cuh/1.1/Thu Sep  8 21:02:01 2016//
+/util_type.cuh/1.1/Thu Sep  8 21:02:01 2016//
+D/agent////
+D/block////
+D/device////
+D/grid////
+D/host////
+D/iterator////
+D/thread////
+D/warp////
