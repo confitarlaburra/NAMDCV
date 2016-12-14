@@ -513,6 +513,7 @@ int colvar::init_components(std::string const &conf)
     "number", "groupCoord");
   error_code |= init_components_type<angle>(conf, "angle", "angle");
   error_code |= init_components_type<dipole_angle>(conf, "dipole angle", "dipoleAngle");
+  error_code |= init_components_type<dipole_magnitude>(conf, "dipole magnitude", "dipoleM");
   error_code |= init_components_type<dihedral>(conf, "dihedral", "dihedral");
   error_code |= init_components_type<h_bond>(conf, "hydrogen bond", "hBond");
   error_code |= init_components_type<alpha_angles>(conf, "alpha helix", "alpha");

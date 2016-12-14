@@ -673,6 +673,33 @@ public:
 
 
 
+/// \brief Colvar component:  dipole magnitude of a molecule
+class colvar::dipole_magnitude
+  : public colvar::cvc
+{
+protected:
+  /// Dipole atom group
+  cvm::atom_group  *atoms;
+public:
+  /// Initialize by parsing the configuration
+  dipole_magnitude (std::string const &conf);
+  dipole_magnitude();
+  virtual ~dipole_magnitude() {}
+  virtual void calc_value();
+  virtual void calc_gradients();
+  //virtual void calc_force_invgrads();
+  //virtual void calc_Jacobian_derivative();
+  virtual void apply_force (colvarvalue const &force);
+  virtual cvm::real dist2 (colvarvalue const &x1,
+                           colvarvalue const &x2) const;
+  virtual colvarvalue dist2_lgrad (colvarvalue const &x1,
+                                   colvarvalue const &x2) const;
+  virtual colvarvalue dist2_rgrad (colvarvalue const &x1,
+                                   colvarvalue const &x2) const;
+};
+
+
+
 /// \brief Colvar component: dihedral between the centers of mass of
 /// four groups (colvarvalue::type_scalar type, range [-PI:PI])
 class colvar::dihedral

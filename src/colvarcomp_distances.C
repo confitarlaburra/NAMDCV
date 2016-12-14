@@ -1432,3 +1432,68 @@ void colvar::cartesian::apply_force(colvarvalue const &force)
   }
 }
 
+/// JAG 2016 dipole magnitude colvar
+
+colvar::dipole_magnitude::dipole_magnitude(std::string const &conf)
+  : cvc(conf)
+{
+  function_type = "dipole_magnitude";
+  //provide(f_cvc_inv_gradient);
+  //provide(f_cvc_Jacobian);
+  atoms = parse_group(conf, "atoms");
+
+  if (atoms->b_user_defined_fit) {
+    cvm::log("WARNING: explicit fitting parameters were provided for atom group \"atoms\".");
+  } else {
+    atoms->b_center = true;
+    atoms->ref_pos.assign(1, cvm::atom_pos(0.0, 0.0, 0.0));
+  }
+
+  x.type(colvarvalue::type_scalar);
+}
+
+
+colvar::dipole_magnitude::dipole_magnitude()
+{
+  function_type = "dipole_magnitude";
+  //provide(f_cvc_inv_gradient);
+  //provide(f_cvc_Jacobian);
+  x.type(colvarvalue::type_scalar);
+}
+
+
+void colvar::dipole_magnitude::calc_value()
+{
+  x.real_value = 0.0;
+  cvm::atom_pos const dipoleV = atoms->center_of_mass();
+  atoms->calc_dipole(dipoleV);
+  
+  x.real_value = (atoms->dipole()).norm();
+}
+
+
+void colvar::dipole_magnitude::calc_gradients()
+{
+  cvm::real const aux1 = atoms->total_charge/atoms->total_mass;
+  cvm::real const aux2 = x.real_value*x.real_value;
+  cvm::real const drdx = 1.0/(cvm::real(atoms->size()) * x.real_value);
+
+  for (cvm::atom_iter ai = atoms->begin(); ai != atoms->end(); ai++) {
+    ai->grad = drdx * ai->pos;
+  }
+}
+
+
+// to be implemented 
+//void colvar::dipole_magnitude::calc_force_invgrads()
+//void colvar::gyration::calc_Jacobian_derivative()
+
+
+void colvar::dipole_magnitude::apply_force(colvarvalue const &force)
+{
+  if (!atoms->noforce)
+    atoms->apply_colvar_force(force.real_value);
+}
+
+
+simple_scalar_dist_functions(dipole_magnitude)
